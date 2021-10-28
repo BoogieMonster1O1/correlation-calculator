@@ -10,12 +10,20 @@
   <body>
     <div id="app" class="flex flex-col justify-center items-center">
       <h1>Correlation Calculator</h1>
-      <h2>Enter coordinates in separate lines in the format x,y</h2>
+      <h2>Enter coordinates in separate lines in the format x y</h2>
       <br>
-      <textarea id="coords" class="form-textarea mt-1 block w-full" rows="20" cols="8"></textarea>
+      <label class="block text-left" style="max-width: 400px">
+        <textarea id="coords" class="form-textarea mt-1 block w-full" rows="10" cols="8"></textarea>
+      </label>
       <br>
       <button id = "calculate" class="bg-purple-500" type = "button">Calculate</button>
       <div id="output">
+        <table id="outTable" class="table-auto border-b border-gray-200 shadow">
+          <tr>
+            <th>test</th>
+            <th>test</th>
+          </tr>
+        </table>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>

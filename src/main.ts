@@ -1,7 +1,9 @@
-import './style.css'
+import "./style.css"
+import "tailwindcss/tailwind.css"
 import * as _ from "lodash";
 
 const textArea: HTMLTextAreaElement = document.querySelector<HTMLTextAreaElement>("#coords")!;
+const outTable: HTMLTableElement = document.querySelector<HTMLTableElement>("#outTable")!;
 
 class PartialEntry {
     constructor(
@@ -33,12 +35,15 @@ document.getElementById("calculate")!.onclick = function(){
         .filter((value: number[]) => !value.includes(NaN))
         .uniq()
         .value();
-    var means: number[] = out.reduce((a: number[], b: number[]) => [a[0] + b[0], a[1] + b[1]])
+    const means: number[] = out.reduce((a: number[], b: number[]) => [a[0] + b[0], a[1] + b[1]])
                             .map(a => (a + 0.0) / out.length)
-    var data: Entry[] = _.chain(out)
+    const data: Entry[] = _.chain(out)
         .map((value: number[]) => new PartialEntry(value[0], value[1], value[0] - means[0], value[1] - means[1]))
         .map((value: PartialEntry) => new Entry(value.x, value.y, value.dx, value.dy, value.dx * value.dx, value.dy * value.dy, value.dx * value.dy))
         .value()
+
+    outTable.childNodes.forEach((node) => node.remove);
+
     console.log(out);
     console.log(means);
     console.log(data);
