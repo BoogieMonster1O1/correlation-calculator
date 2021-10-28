@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+    <div id="app" class="flex flex-col justify-center items-center">
+      <h1>Correlation Calculator</h1>
+      <h2>Enter coordinates in separate lines in the format x,y</h2>
+      <br>
+      <textarea id="coords" class="form-textarea mt-1 block w-full" rows="20" cols="8"></textarea>
+      <br>
+      <button id = "calculate" class="bg-purple-500" type = "button">Calculate</button>
+      <div id="output">
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
