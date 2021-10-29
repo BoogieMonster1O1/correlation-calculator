@@ -1,6 +1,6 @@
 import "./style.css"
 import "tailwindcss/tailwind.css"
-import * as _ from "lodash";
+import _ from "lodash";
 
 const textArea: HTMLTextAreaElement = document.querySelector<HTMLTextAreaElement>("#coords")!;
 const outTable: HTMLTableElement = document.querySelector<HTMLTableElement>("#outTable")!;
@@ -37,6 +37,18 @@ class Entry {
         readonly dy2: number,
         readonly dxdy: number
     ) {}
+
+    add(other: Entry): Entry {
+        return new Entry(
+            this.x + other.x,
+            this.y + other.y,
+            this.dx + other.dx,
+            this.dy + other.dy,
+            this.dx2 + other.dx2,
+            this.dy2 + other.dy2,
+            this.dxdy + other.dxdy
+        );
+    }
 
     addRow(table: HTMLTableElement): void {
         const entryRow: HTMLTableRowElement = table.insertRow();
@@ -77,9 +89,14 @@ document.getElementById("calculate")!.onclick = function(){
     headingRow.appendChild(createTableHeading("dxdy"));
     data.forEach((entry: Entry) => entry.addRow(outTable));
 
+    const sums: Entry = data.reduce((a, b) => a.add(b));
     removeAllChildren(outInfo);
     outInfo.appendChild(createText(`x mean: ${means[0]}`));
     outInfo.appendChild(createText(`y mean: ${means[1]}`));
+    outInfo.appendChild(createText(`∑dx2: ${sums.dx2}`));
+    outInfo.appendChild(createText(`∑dy2: ${sums.dy2}`));
+    outInfo.appendChild(createText(`∑dxdy: ${sums.dxdy}`));
+    outInfo.appendChild(createText(`Karl Pearson's correlation coefficient: ${sums.dxdy / Math.sqrt(sums.dx2 * sums.dy2)}`));
 }
 
 function createText(text: string): HTMLParagraphElement {
@@ -107,4 +124,13 @@ function createTableCell(value: number): HTMLTableCellElement {
     element.innerHTML = value.toString();
     element.setAttribute("class", "bg-blue-100 border px-8 py-3");
     return element;
+}
+
+function gcd(x: number, y: number): number {
+    while(y) {
+        const t: number = y;
+        y = x % y;
+        x = t;
+    }
+    return x;
 }
