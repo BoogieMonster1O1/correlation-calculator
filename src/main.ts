@@ -4,6 +4,7 @@ import * as _ from "lodash";
 
 const textArea: HTMLTextAreaElement = document.querySelector<HTMLTextAreaElement>("#coords")!;
 const outTable: HTMLTableElement = document.querySelector<HTMLTableElement>("#outTable")!;
+const outInfo: HTMLDivElement = document.querySelector<HTMLDivElement>("#outInfo")!;
 
 class PartialEntry {
     constructor(
@@ -76,18 +77,14 @@ document.getElementById("calculate")!.onclick = function(){
     headingRow.appendChild(createTableHeading("dxdy"));
     data.forEach((entry: Entry) => entry.addRow(outTable));
 
-    const caption: HTMLTableCaptionElement = outTable.caption!
-    caption.textContent = `"
-        <p>x mean: ${means[0]}</p>
-        <p>y mean: ${means[1]}</p>
-    "`
-    // caption.innerHTML = "";
-    // caption.appendChild(createText("X Mean: " + means[0]));
-    // caption.appendChild(createText("Y Mean: " + means[1]));
+    removeAllChildren(outInfo);
+    outInfo.appendChild(createText(`x mean: ${means[0]}`));
+    outInfo.appendChild(createText(`y mean: ${means[1]}`));
 }
 
 function createText(text: string): HTMLParagraphElement {
     const p: HTMLParagraphElement = document.createElement("p");
+    p.setAttribute("class", "text-xl");
     p.innerHTML = text;
     return p;
 }
@@ -101,13 +98,13 @@ function removeAllChildren(element: HTMLElement) {
 function createTableHeading(value: string): HTMLTableCellElement {
     const element: HTMLTableCellElement = document.createElement('th');
     element.innerHTML = value;
-    element.setAttribute("class", "bg-blue-300 border text-left px-8 py-4");
+    element.setAttribute("class", "bg-blue-300 border text-left px-8 py-3");
     return element;
 }
 
 function createTableCell(value: number): HTMLTableCellElement {
     const element: HTMLTableCellElement = document.createElement('th');
     element.innerHTML = value.toString();
-    element.setAttribute("class", "bg-blue-100 border px-8 py-4");
+    element.setAttribute("class", "bg-blue-100 border px-8 py-3");
     return element;
 }
