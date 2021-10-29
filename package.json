@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.4",
+    "@types/desmos": "^1.6.0",
     "@types/lodash": "^4.14.176",
     "d3": "^7.1.1",
+    "desmos": "^1.5.4",
     "lodash": "^4.17.21",
     "tailwindcss": "^2.2.17"
   }

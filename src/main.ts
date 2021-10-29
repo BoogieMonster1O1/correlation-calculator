@@ -1,10 +1,12 @@
 import "./style.css"
 import "tailwindcss/tailwind.css"
 import _ from "lodash";
+import "desmos"
 
 const textArea: HTMLTextAreaElement = document.querySelector<HTMLTextAreaElement>("#coords")!;
 const outTable: HTMLTableElement = document.querySelector<HTMLTableElement>("#outTable")!;
 const outInfo: HTMLDivElement = document.querySelector<HTMLDivElement>("#outInfo")!;
+const calculatorDiv: HTMLDivElement = document.querySelector<HTMLDivElement> ("#calculatorDiv")!;
 
 class PartialEntry {
     constructor(
@@ -76,7 +78,7 @@ document.getElementById("calculate")!.onclick = function(){
     const data: Entry[] = _.chain(out)
         .map((value: number[]) => new PartialEntry(value[0], value[1], value[0] - means[0], value[1] - means[1]))
         .map((value: PartialEntry) => value.complete())
-        .value()
+        .value();
 
     removeAllChildren(outTable);
     const headingRow: HTMLTableRowElement = outTable.insertRow();
@@ -97,6 +99,13 @@ document.getElementById("calculate")!.onclick = function(){
     outInfo.appendChild(createText(`∑dy2: ${sums.dy2}`));
     outInfo.appendChild(createText(`∑dxdy: ${sums.dxdy}`));
     outInfo.appendChild(createText(`Karl Pearson's correlation coefficient: ${sums.dxdy / Math.sqrt(sums.dx2 * sums.dy2)}`));
+
+    const calculator = Desmos.GraphingCalculator(calculatorDiv, {
+
+    });
+    calculator.resize();
+    const exps = data.map((entry: Entry) => <Desmos.ExpressionState>({latex: `(${entry.x}, ${entry.y})`}));
+    calculator.setExpressions(exps);
 }
 
 function createText(text: string): HTMLParagraphElement {
@@ -124,13 +133,4 @@ function createTableCell(value: number): HTMLTableCellElement {
     element.innerHTML = value.toString();
     element.setAttribute("class", "bg-blue-100 border px-8 py-3");
     return element;
-}
-
-function gcd(x: number, y: number): number {
-    while(y) {
-        const t: number = y;
-        y = x % y;
-        x = t;
-    }
-    return x;
 }
