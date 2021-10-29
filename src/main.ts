@@ -4,7 +4,6 @@ import * as _ from "lodash";
 
 const textArea: HTMLTextAreaElement = document.querySelector<HTMLTextAreaElement>("#coords")!;
 const outTable: HTMLTableElement = document.querySelector<HTMLTableElement>("#outTable")!;
-const outInfo: HTMLTableCaptionElement = document.querySelector<HTMLTableCaptionElement>("#outInfo")!;
 
 class PartialEntry {
     constructor(
@@ -76,13 +75,15 @@ document.getElementById("calculate")!.onclick = function(){
     headingRow.appendChild(createTableHeading("dy2"));
     headingRow.appendChild(createTableHeading("dxdy"));
     data.forEach((entry: Entry) => entry.addRow(outTable));
-    removeAllChildren(outInfo);
-    outInfo.appendChild(createText("X Mean: " + means[0]));
-    outInfo.appendChild(createText("Y Mean: " + means[1]));
 
-    console.log(out);
-    console.log(means);
-    console.log(data);
+    const caption: HTMLTableCaptionElement = outTable.caption!
+    caption.textContent = `"
+        <p>x mean: ${means[0]}</p>
+        <p>y mean: ${means[1]}</p>
+    "`
+    // caption.innerHTML = "";
+    // caption.appendChild(createText("X Mean: " + means[0]));
+    // caption.appendChild(createText("Y Mean: " + means[1]));
 }
 
 function createText(text: string): HTMLParagraphElement {
