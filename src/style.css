@@ -2,13 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@font-face {
-  font-family: 'San Franciso';
-  src: url("https://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts/blob/master/SF-Pro.ttf?raw=truehttps://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts/blob/master/SF-Pro.ttf?raw=true") format("opentype");
-}
-
 #app {
-  font-family: 'San Francisco', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'SF Pro', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin-top: 30px;
