@@ -4,6 +4,7 @@ import * as _ from "lodash";
 
 const textArea: HTMLTextAreaElement = document.querySelector<HTMLTextAreaElement>("#coords")!;
 const outTable: HTMLTableElement = document.querySelector<HTMLTableElement>("#outTable")!;
+const outInfo: HTMLTableCaptionElement = document.querySelector<HTMLTableCaptionElement>("#outInfo")!;
 
 class PartialEntry {
     constructor(
@@ -38,7 +39,7 @@ class Entry {
     ) {}
 
     addRow(table: HTMLTableElement): void {
-        const entryRow: HTMLTableRowElement = outTable.insertRow();
+        const entryRow: HTMLTableRowElement = table.insertRow();
         entryRow.appendChild(createTableCell(this.x));
         entryRow.appendChild(createTableCell(this.y));
         entryRow.appendChild(createTableCell(this.dx));
@@ -75,10 +76,19 @@ document.getElementById("calculate")!.onclick = function(){
     headingRow.appendChild(createTableHeading("dy2"));
     headingRow.appendChild(createTableHeading("dxdy"));
     data.forEach((entry: Entry) => entry.addRow(outTable));
+    removeAllChildren(outInfo);
+    outInfo.appendChild(createText("X Mean: " + means[0]));
+    outInfo.appendChild(createText("Y Mean: " + means[1]));
 
     console.log(out);
     console.log(means);
     console.log(data);
+}
+
+function createText(text: string): HTMLParagraphElement {
+    const p: HTMLParagraphElement = document.createElement("p");
+    p.innerHTML = text;
+    return p;
 }
 
 function removeAllChildren(element: HTMLElement) {
@@ -90,11 +100,13 @@ function removeAllChildren(element: HTMLElement) {
 function createTableHeading(value: string): HTMLTableCellElement {
     const element: HTMLTableCellElement = document.createElement('th');
     element.innerHTML = value;
+    element.setAttribute("class", "bg-blue-300 border text-left px-8 py-4");
     return element;
 }
 
 function createTableCell(value: number): HTMLTableCellElement {
     const element: HTMLTableCellElement = document.createElement('th');
     element.innerHTML = value.toString();
+    element.setAttribute("class", "bg-blue-100 border px-8 py-4");
     return element;
 }
